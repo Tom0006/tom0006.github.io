@@ -6,16 +6,20 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://yoursite.com">
-  <title>Archives: 2018/5 | alone的小站</title>
+  <title>嵌入式学习笔记 | alone的小站</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="keywords" content="linux,控制算法">
-<meta property="og:type" content="website">
-<meta property="og:title" content="alone的小站">
-<meta property="og:url" content="http://yoursite.com/archives/2018/05/index.html">
+  <meta name="description" content="#嵌入式学习笔记 #一、 拿到开发板 ping 相关">
+<meta name="keywords" content="linux,控制算法">
+<meta property="og:type" content="article">
+<meta property="og:title" content="嵌入式学习笔记">
+<meta property="og:url" content="http://yoursite.com/2018/05/18/my_note/index.html">
 <meta property="og:site_name" content="alone的小站">
+<meta property="og:description" content="#嵌入式学习笔记 #一、 拿到开发板 ping 相关">
 <meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2018-05-21T04:07:42.880Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="alone的小站">
+<meta name="twitter:title" content="嵌入式学习笔记">
+<meta name="twitter:description" content="#嵌入式学习笔记 #一、 拿到开发板 ping 相关">
   
     <link rel="alternative" href="/atom.xml" title="alone的小站" type="application/atom+xml">
   
@@ -139,103 +143,180 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
+            <article id="post-my_note" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
   
+    <h1 class="article-title" itemprop="name">
+      嵌入式学习笔记
+    </h1>
   
-    
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2018" class="archive-year">2018</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2018/05/18/my-first-blog/" class="archive-article-date">
+
+        
+        <a href="/2018/05/18/my_note/" class="archive-article-date">
   	<time datetime="2018-05-18T12:36:28.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-05-18</time>
 </a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/05/18/my-first-blog/">my-first-blog</a>
-    </h1>
-  
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>#嵌入式学习笔记</p>
+<p>#一、 拿到开发板 ping 相关</p>
+<a id="more"></a>
+<h2 id="1-各个设备的ip及连接方式"><a href="#1-各个设备的ip及连接方式" class="headerlink" title="1. 各个设备的ip及连接方式"></a>1. 各个设备的ip及连接方式</h2><p>PC机(电脑)IP、u-boot的IP、虚拟机IP、板子linux的IP需要在同一个网段，PC机有其他的网卡的话，需要在不同的网段。同一个网段是指，xxx.xxx.xxx.xxx的前三个xxx是一样的，后三个xxx是不一样的。</p>
+<h2 id="2-设置IP及-ping-相关"><a href="#2-设置IP及-ping-相关" class="headerlink" title="2. 设置IP及 ping 相关"></a>2. 设置IP及 ping 相关</h2><p>以PC机的IP网段为准，设置各个IP。</p>
+<pre><code>ipconfig                 // 查看pc机ip
+ifconfig                 // 查看linux的ip
+ifconfig eth* x.x.x.x    // 设置linux的ip，*是数字，网卡号，可用上一条命令查看
+print        // 打印uboot里面的信息
+set paddr x.x.x.x 
+save   // 设置 uboot 下的ip,保存
+</code></pre><h2 id="ping相关"><a href="#ping相关" class="headerlink" title="ping相关"></a>ping相关</h2><h3 id="1-uboot-ping-PC机"><a href="#1-uboot-ping-PC机" class="headerlink" title="1. uboot ping PC机"></a>1. uboot ping PC机</h3><pre><code>ping x.x.x.x 
+</code></pre><p>会显示 alive 是通的</p>
+<h3 id="2-uboot-ping-虚拟机"><a href="#2-uboot-ping-虚拟机" class="headerlink" title="2. uboot ping 虚拟机"></a>2. uboot ping 虚拟机</h3><pre><code>ping x.x.x.x
+</code></pre><p>显示 alive，是通的</p>
+<h3 id="3-PC-ping-虚拟机"><a href="#3-PC-ping-虚拟机" class="headerlink" title="3. PC ping 虚拟机"></a>3. PC ping 虚拟机</h3><h3 id="4-虚拟机-ping-PC机"><a href="#4-虚拟机-ping-PC机" class="headerlink" title="4. 虚拟机 ping PC机"></a>4. 虚拟机 ping PC机</h3><h3 id="5-板子可一ping别人，但是别人不能ping板子，应为u-boot不回应ping"><a href="#5-板子可一ping别人，但是别人不能ping板子，应为u-boot不回应ping" class="headerlink" title="5. 板子可一ping别人，但是别人不能ping板子，应为u-boot不回应ping"></a>5. 板子可一ping别人，但是别人不能ping板子，应为u-boot不回应ping</h3><h2 id="一些操作"><a href="#一些操作" class="headerlink" title="一些操作"></a>一些操作</h2><h3 id="网络烧写内核"><a href="#网络烧写内核" class="headerlink" title="网络烧写内核"></a>网络烧写内核</h3><pre><code>tftp 30000000 uImage
+</code></pre>
+      
 
-        <div class="article-info info-on-right">
-          
-          
-
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你哦！<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
         </div>
-        <div class="clearfix"></div>
-    </header>
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
+        </div>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//pan.baidu.com/share/qrcode?url=http://yoursite.com/2018/05/18/my_note/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
+
   
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2018/05/18/my_note/" class="archive-article-date">
-  	<time datetime="2018-05-18T12:36:28.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-05-18</time>
-</a>
+<nav id="article-nav">
+  
+    <a href="/2018/05/18/my-first-blog/" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          my-first-blog
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2018/05/18/hello-world/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">Hello World</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
         </div>
-    	 
+        
+        
+    </div>
+</aside>
+
+
+
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/05/18/my_note/">嵌入式学习笔记</a>
-    </h1>
+  
   
 
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2018/05/18/hello-world/" class="archive-article-date">
-  	<time datetime="2018-05-18T12:29:51.902Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-05-18</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/05/18/hello-world/">Hello World</a>
-    </h1>
   
 
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-  
-    </div></section>
   
 
-    
+  
 
 
           </div>
@@ -258,8 +339,8 @@
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: false,
-		isArchive: true,
+		isPost: true,
+		isArchive: false,
 		isTag: false,
 		isCategory: false,
 		open_in_new: false,
