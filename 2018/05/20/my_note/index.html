@@ -6,20 +6,20 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://yoursite.com">
-  <title>my-first-blog | alone的小站</title>
+  <title>嵌入式学习笔记 | alone的小站</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="曾文">
+  <meta name="description" content="一、 拿到开发板 ping 相关">
 <meta name="keywords" content="linux,控制算法">
 <meta property="og:type" content="article">
-<meta property="og:title" content="my-first-blog">
-<meta property="og:url" content="http://yoursite.com/2018/05/18/my-first-blog/index.html">
+<meta property="og:title" content="嵌入式学习笔记">
+<meta property="og:url" content="http://yoursite.com/2018/05/20/my_note/index.html">
 <meta property="og:site_name" content="alone的小站">
-<meta property="og:description" content="曾文">
+<meta property="og:description" content="一、 拿到开发板 ping 相关">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2018-05-18T12:36:51.502Z">
+<meta property="og:updated_time" content="2018-05-21T04:12:07.556Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="my-first-blog">
-<meta name="twitter:description" content="曾文">
+<meta name="twitter:title" content="嵌入式学习笔记">
+<meta name="twitter:description" content="一、 拿到开发板 ping 相关">
   
     <link rel="alternative" href="/atom.xml" title="alone的小站" type="application/atom+xml">
   
@@ -143,28 +143,41 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="post-my-first-blog" class="article article-type-post " itemscope itemprop="blogPost">
+            <article id="post-my_note" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 class="article-title" itemprop="name">
-      my-first-blog
+      嵌入式学习笔记
     </h1>
   
 
         
-        <a href="/2018/05/18/my-first-blog/" class="archive-article-date">
-  	<time datetime="2018-05-18T12:36:28.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-05-18</time>
+        <a href="/2018/05/20/my_note/" class="archive-article-date">
+  	<time datetime="2018-05-20T12:36:28.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-05-20</time>
 </a>
         
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>  曾文</p>
-
+        <h1 id="一、-拿到开发板-ping-相关"><a href="#一、-拿到开发板-ping-相关" class="headerlink" title="一、 拿到开发板 ping 相关"></a>一、 拿到开发板 ping 相关</h1><a id="more"></a>
+<h2 id="1-各个设备的ip及连接方式"><a href="#1-各个设备的ip及连接方式" class="headerlink" title="1. 各个设备的ip及连接方式"></a>1. 各个设备的ip及连接方式</h2><p>PC机(电脑)IP、u-boot的IP、虚拟机IP、板子linux的IP需要在同一个网段，PC机有其他的网卡的话，需要在不同的网段。同一个网段是指，xxx.xxx.xxx.xxx的前三个xxx是一样的，后三个xxx是不一样的。</p>
+<h2 id="2-设置IP及-ping-相关"><a href="#2-设置IP及-ping-相关" class="headerlink" title="2. 设置IP及 ping 相关"></a>2. 设置IP及 ping 相关</h2><p>以PC机的IP网段为准，设置各个IP。</p>
+<pre><code>ipconfig                 // 查看pc机ip
+ifconfig                 // 查看linux的ip
+ifconfig eth* x.x.x.x    // 设置linux的ip，*是数字，网卡号，可用上一条命令查看
+print        // 打印uboot里面的信息
+set paddr x.x.x.x 
+save   // 设置 uboot 下的ip,保存
+</code></pre><h2 id="ping相关"><a href="#ping相关" class="headerlink" title="ping相关"></a>ping相关</h2><h3 id="1-uboot-ping-PC机"><a href="#1-uboot-ping-PC机" class="headerlink" title="1. uboot ping PC机"></a>1. uboot ping PC机</h3><pre><code>ping x.x.x.x 
+</code></pre><p>会显示 alive 是通的</p>
+<h3 id="2-uboot-ping-虚拟机"><a href="#2-uboot-ping-虚拟机" class="headerlink" title="2. uboot ping 虚拟机"></a>2. uboot ping 虚拟机</h3><pre><code>ping x.x.x.x
+</code></pre><p>显示 alive，是通的</p>
+<h3 id="3-PC-ping-虚拟机"><a href="#3-PC-ping-虚拟机" class="headerlink" title="3. PC ping 虚拟机"></a>3. PC ping 虚拟机</h3><h3 id="4-虚拟机-ping-PC机"><a href="#4-虚拟机-ping-PC机" class="headerlink" title="4. 虚拟机 ping PC机"></a>4. 虚拟机 ping PC机</h3><h3 id="5-板子可一ping别人，但是别人不能ping板子，应为u-boot不回应ping"><a href="#5-板子可一ping别人，但是别人不能ping板子，应为u-boot不回应ping" class="headerlink" title="5. 板子可一ping别人，但是别人不能ping板子，应为u-boot不回应ping"></a>5. 板子可一ping别人，但是别人不能ping板子，应为u-boot不回应ping</h3><h2 id="一些操作"><a href="#一些操作" class="headerlink" title="一些操作"></a>一些操作</h2><h3 id="网络烧写内核"><a href="#网络烧写内核" class="headerlink" title="网络烧写内核"></a>网络烧写内核</h3><pre><code>tftp 30000000 uImage
+</code></pre>
       
 
       
@@ -243,7 +256,7 @@
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="//pan.baidu.com/share/qrcode?url=http://yoursite.com/2018/05/18/my-first-blog/" alt="微信分享二维码">
+      <img src="//pan.baidu.com/share/qrcode?url=http://yoursite.com/2018/05/20/my_note/" alt="微信分享二维码">
     </div>
 </div>
 
@@ -257,18 +270,9 @@
   
 <nav id="article-nav">
   
-    <a href="/2018/05/20/my_note/" id="article-nav-newer" class="article-nav-link-wrap">
-      <i class="icon-circle-left"></i>
-      <div class="article-nav-title">
-        
-          嵌入式学习笔记
-        
-      </div>
-    </a>
   
-  
-    <a href="/2018/05/18/hello-world/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">Hello World</div>
+    <a href="/2018/05/18/my-first-blog/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">my-first-blog</div>
       <i class="icon-circle-right"></i>
     </a>
   
