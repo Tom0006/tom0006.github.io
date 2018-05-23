@@ -8,18 +8,18 @@
   <link rel="dns-prefetch" href="http://yoursite.com">
   <title>嵌入式学习基础笔记 | alone的小站</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="本篇文章将记录嵌入式开发的相关基础知识，以深圳百问科技韦东山老师及其团队的相关教程为基础，进行学习。 ##主要内容如下  2440的ping相关内容  u-boot下的命令  2440的nand启动和nor启动  2440 的GPIO配置   跳转到的地方">
+  <meta name="description" content="本篇文章将记录嵌入式开发的相关基础知识，以深圳百问科技韦东山老师及其团队的相关教程为基础，进行学习。 ##主要内容如下  2440的ping相关内容  u-boot下的命令  2440的nand启动和nor启动  2440 的GPIO配置">
 <meta name="keywords" content="linux,控制算法">
 <meta property="og:type" content="article">
 <meta property="og:title" content="嵌入式学习基础笔记">
 <meta property="og:url" content="http://yoursite.com/2018/05/20/linux_note/index.html">
 <meta property="og:site_name" content="alone的小站">
-<meta property="og:description" content="本篇文章将记录嵌入式开发的相关基础知识，以深圳百问科技韦东山老师及其团队的相关教程为基础，进行学习。 ##主要内容如下  2440的ping相关内容  u-boot下的命令  2440的nand启动和nor启动  2440 的GPIO配置   跳转到的地方">
+<meta property="og:description" content="本篇文章将记录嵌入式开发的相关基础知识，以深圳百问科技韦东山老师及其团队的相关教程为基础，进行学习。 ##主要内容如下  2440的ping相关内容  u-boot下的命令  2440的nand启动和nor启动  2440 的GPIO配置">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2018-05-23T15:07:51.083Z">
+<meta property="og:updated_time" content="2018-05-23T15:09:38.298Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="嵌入式学习基础笔记">
-<meta name="twitter:description" content="本篇文章将记录嵌入式开发的相关基础知识，以深圳百问科技韦东山老师及其团队的相关教程为基础，进行学习。 ##主要内容如下  2440的ping相关内容  u-boot下的命令  2440的nand启动和nor启动  2440 的GPIO配置   跳转到的地方">
+<meta name="twitter:description" content="本篇文章将记录嵌入式开发的相关基础知识，以深圳百问科技韦东山老师及其团队的相关教程为基础，进行学习。 ##主要内容如下  2440的ping相关内容  u-boot下的命令  2440的nand启动和nor启动  2440 的GPIO配置">
   
     <link rel="alternative" href="/atom.xml" title="alone的小站" type="application/atom+xml">
   
@@ -175,7 +175,6 @@
 <li><p>2440 的GPIO配置</p>
 </li>
 </ul>
-<p><span id="jump">跳转到的地方</span></p>
 <a id="more"></a>
 <h3 id="一、-拿到开发板-ping-相关"><a href="#一、-拿到开发板-ping-相关" class="headerlink" title="一、 拿到开发板 ping 相关"></a>一、 拿到开发板 ping 相关</h3><h4 id="1-各个设备的ip及连接方式"><a href="#1-各个设备的ip及连接方式" class="headerlink" title="1. 各个设备的ip及连接方式"></a>1. 各个设备的ip及连接方式</h4><p>PC机(电脑)IP、u-boot的IP、虚拟机IP、板子linux的IP需要在同一个网段，PC机有其他的网卡的话，需要在不同的网段。同一个网段是指，xxx.xxx.xxx.xxx的前三个xxx是一样的，后三个xxx是不一样的。</p>
 <h4 id="2-设置IP及-ping-相关"><a href="#2-设置IP及-ping-相关" class="headerlink" title="2. 设置IP及 ping 相关"></a>2. 设置IP及 ping 相关</h4><p>以PC机的IP网段为准，设置各个IP。</p>
@@ -197,8 +196,7 @@ save   // 设置 uboot 下的ip,保存
 <p>片外内存地址：0x40000000</p>
 <h4 id="2-NAND-flash启动：把程序烧写在NAND-flash上"><a href="#2-NAND-flash启动：把程序烧写在NAND-flash上" class="headerlink" title="2. NAND flash启动：把程序烧写在NAND flash上"></a>2. NAND flash启动：把程序烧写在NAND flash上</h4><p>基地址：片内4kRAM的0地址</p>
 <p>上电后，2440硬件把NAND上前4K的内容复制到片内RAM中，然后CPU从片内RAM中取出第一条指令开始执行。即NAND启动的话，0地址对应的是片内的RAM，但是片内的RAM的内容是从NAND flash上复制过来的。此时NOR是不可访问的。</p>
-<h3 id="2440-的GPIO配置"><a href="#2440-的GPIO配置" class="headerlink" title="2440 的GPIO配置"></a>2440 的GPIO配置</h3><p>跳转到的地方</p>
-
+<h3 id="2440-的GPIO配置"><a href="#2440-的GPIO配置" class="headerlink" title="2440 的GPIO配置"></a>2440 的GPIO配置</h3>
       
 
       
