@@ -8,18 +8,18 @@
   <link rel="dns-prefetch" href="http://yoursite.com">
   <title>嵌入式学习基础笔记 | alone的小站</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="本篇文章将记录嵌入式开发的相关基础知识，以深圳百问科技韦东山老师及其团队的相关教程为基础，进行学习。 ##主要内容如下  2440的ping相关内容  u-boot下的命令  2440的nand启动和nor启动  2440 的GPIO配置">
+  <meta name="description" content="本篇文章将记录嵌入式开发的相关基础知识，以深圳百问科技韦东山老师及其团队的相关教程为基础，进行学习。 ##主要内容如下  2440的ping相关内容  u-boot下的命令  2440的nand启动和nor启动  汇编指令  2440GPIO的使用以及编程知识  Makefile">
 <meta name="keywords" content="linux,控制算法">
 <meta property="og:type" content="article">
 <meta property="og:title" content="嵌入式学习基础笔记">
 <meta property="og:url" content="http://yoursite.com/2018/05/20/linux_note/index.html">
 <meta property="og:site_name" content="alone的小站">
-<meta property="og:description" content="本篇文章将记录嵌入式开发的相关基础知识，以深圳百问科技韦东山老师及其团队的相关教程为基础，进行学习。 ##主要内容如下  2440的ping相关内容  u-boot下的命令  2440的nand启动和nor启动  2440 的GPIO配置">
+<meta property="og:description" content="本篇文章将记录嵌入式开发的相关基础知识，以深圳百问科技韦东山老师及其团队的相关教程为基础，进行学习。 ##主要内容如下  2440的ping相关内容  u-boot下的命令  2440的nand启动和nor启动  汇编指令  2440GPIO的使用以及编程知识  Makefile">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2018-05-23T15:09:38.298Z">
+<meta property="og:updated_time" content="2018-05-24T16:46:50.135Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="嵌入式学习基础笔记">
-<meta name="twitter:description" content="本篇文章将记录嵌入式开发的相关基础知识，以深圳百问科技韦东山老师及其团队的相关教程为基础，进行学习。 ##主要内容如下  2440的ping相关内容  u-boot下的命令  2440的nand启动和nor启动  2440 的GPIO配置">
+<meta name="twitter:description" content="本篇文章将记录嵌入式开发的相关基础知识，以深圳百问科技韦东山老师及其团队的相关教程为基础，进行学习。 ##主要内容如下  2440的ping相关内容  u-boot下的命令  2440的nand启动和nor启动  汇编指令  2440GPIO的使用以及编程知识  Makefile">
   
     <link rel="alternative" href="/atom.xml" title="alone的小站" type="application/atom+xml">
   
@@ -172,7 +172,11 @@
 </li>
 <li><p>2440的nand启动和nor启动</p>
 </li>
-<li><p>2440 的GPIO配置</p>
+<li><p>汇编指令</p>
+</li>
+<li><p>2440GPIO的使用以及编程知识</p>
+</li>
+<li><p>Makefile</p>
 </li>
 </ul>
 <a id="more"></a>
@@ -196,7 +200,233 @@ save   // 设置 uboot 下的ip,保存
 <p>片外内存地址：0x40000000</p>
 <h4 id="2-NAND-flash启动：把程序烧写在NAND-flash上"><a href="#2-NAND-flash启动：把程序烧写在NAND-flash上" class="headerlink" title="2. NAND flash启动：把程序烧写在NAND flash上"></a>2. NAND flash启动：把程序烧写在NAND flash上</h4><p>基地址：片内4kRAM的0地址</p>
 <p>上电后，2440硬件把NAND上前4K的内容复制到片内RAM中，然后CPU从片内RAM中取出第一条指令开始执行。即NAND启动的话，0地址对应的是片内的RAM，但是片内的RAM的内容是从NAND flash上复制过来的。此时NOR是不可访问的。</p>
-<h3 id="2440-的GPIO配置"><a href="#2440-的GPIO配置" class="headerlink" title="2440 的GPIO配置"></a>2440 的GPIO配置</h3>
+<h3 id="汇编指令"><a href="#汇编指令" class="headerlink" title="汇编指令"></a>汇编指令</h3><h4 id="sub指令"><a href="#sub指令" class="headerlink" title="sub指令"></a>sub指令</h4><pre><code>sub r0,r1,#4  // r0等于r1-4
+sub r0,r1,r2  // r0等于r1-r2
+</code></pre><h4 id="add指令"><a href="#add指令" class="headerlink" title="add指令"></a>add指令</h4><pre><code>add r0,r1,#4 // r0等于r1+4
+</code></pre><h4 id="bl指令-branch-and-link"><a href="#bl指令-branch-and-link" class="headerlink" title="bl指令 (branch and link)"></a>bl指令 (branch and link)</h4><pre><code>bl xxx
+yyy
+</code></pre><p>跳到xxx，并且把返回地址保存在 lr 寄存器中，返回地址是 yyy 处</p>
+<h4 id="ldm-指令"><a href="#ldm-指令" class="headerlink" title="ldm 指令"></a>ldm 指令</h4><p>读内存，写入多个寄存器。</p>
+<p>ldmia： 过后增加</p>
+<h4 id="stm-指令"><a href="#stm-指令" class="headerlink" title="stm 指令"></a>stm 指令</h4><p>把多个寄存器的内容写入内存</p>
+<p>stmdb：先减后存</p>
+<h4 id="ldr指令，操作4字节"><a href="#ldr指令，操作4字节" class="headerlink" title="ldr指令，操作4字节"></a>ldr指令，操作4字节</h4><p>读内存命令，load装载，装进来。</p>
+<pre><code>ldr r0,[r1]
+</code></pre><p>假设r1的地址是x，读取地址x上的数据（4字节），保存在寄存器r0中。即把后者地址里面的数据放到前者地址里</p>
+<h4 id="str指令，操作4字节"><a href="#str指令，操作4字节" class="headerlink" title="str指令，操作4字节"></a>str指令，操作4字节</h4><p>写内存指令，store存储进去。</p>
+<pre><code>str r0, [r1]
+</code></pre><p>假设r1的地址是x，把r0的值写到地址x（4字节）。即把前者地址里面的数据放到后面地址里</p>
+<h4 id="mov指令"><a href="#mov指令" class="headerlink" title="mov指令"></a>mov指令</h4><pre><code>mov r0, r1
+</code></pre><p>把r0的值赋给r1</p>
+<h4 id="LDR伪指令"><a href="#LDR伪指令" class="headerlink" title="LDR伪指令"></a>LDR伪指令</h4><p>伪指令是不存在的指令，会被拆分成几条真正的ARM指令,往往用于比较大的数，因为太大的数。mov操作不了，超出了mov的范围，mov只能用简单值（又叫立即数）</p>
+<pre><code>LDR r0，=任意值 
+LDR r0，=0x12345678  
+</code></pre><p>和前面的读内存指令不同，这个伪指令有=，读内存指令没有</p>
+<h4 id="b和bl指令"><a href="#b和bl指令" class="headerlink" title="b和bl指令"></a>b和bl指令</h4><h3 id="2440GPIO的使用以及编程知识"><a href="#2440GPIO的使用以及编程知识" class="headerlink" title="2440GPIO的使用以及编程知识"></a>2440GPIO的使用以及编程知识</h3><p>本节，以点亮led为基础，了解2440的GPIO使用，linux下裸板编程相关知识。</p>
+<h4 id="1-如何点亮一个led以及如何控制io口"><a href="#1-如何点亮一个led以及如何控制io口" class="headerlink" title="1. 如何点亮一个led以及如何控制io口"></a>1. 如何点亮一个led以及如何控制io口</h4><p>点亮一个led原理是：让led正负极之间有电压，可能还需要一个限流电阻，防止烧坏led。现在在班子上led给焊死了，我们直接给电压就好了。首先要明确的是板子上的led是怎不么接线的，通过查看JZ2440的原理图，得知，板子上有3个led，正极都接在了电源上，负极接了电阻再接到2440芯片上。那么点亮led的方法是，让2440相应的io口输出低电平即可。正负极有电压，点亮。</p>
+<p>以点亮led1为例，只需要让GPF4（GPIO口的F端口的第4号）输出低电平即可。查阅2440芯片手册，了解io的使用。要用io口，有两个步骤：</p>
+<p>一是配置输出模式，用GPFCON寄存器，地址是0x56000050</p>
+<p>二是配置输出高电平，用寄存器GPFDAT，地址是0x56000054</p>
+<p>这里有一点需要注意，这个两个寄存器和R0、R1等等寄存器的区别。R0、R1等寄存器是CPU可以直接用的，在汇编代码中可以直接用R0。但是GPFCON不行，汇编程序中只能用这个寄存器的地址，相比来说他更像是一个普通的内存空间，这个地址是固定的，名字是可以变得，只不过这个内容空间有点特殊，他的每一位都对应一些信息。</p>
+<p>配置输出模式，往寄存器GPFCON里面写入数据（往地址0x56000050写）。这里是F端口4号io口，设置输出，即往该寄存器的第98两位写入01，即是0x100</p>
+<p>配置输出高电平，往寄存器GPFDAT里面写入数据（往地址0x56000054写）.这里是4号oi口，该寄存器的第4位写入0，即0</p>
+<h4 id="2-源程序led-on-S"><a href="#2-源程序led-on-S" class="headerlink" title="2. 源程序led_on.S"></a>2. 源程序led_on.S</h4><pre><code>.text
+.global _start
+
+_start:
+    ldr r1, =0x56000050
+    ldr r0, =0x100    /* mov r0, #0x100 */
+    str r0, [r1]
+
+    ldr r1, =0x56000054
+    ldr r0, =0    /* mov r0, #0 */
+    str r0, [r1]
+halt:
+    b halt
+</code></pre><p>程序的流程：首先配置输出，然后输出低电平，点亮led，汇编的这指令见上一小节。最后有一个死循环，因为不确定后面的内容，死在这里吧先，哈哈。</p>
+<h4 id="3-编译、Makefile"><a href="#3-编译、Makefile" class="headerlink" title="3. 编译、Makefile"></a>3. 编译、Makefile</h4><pre><code>all:
+    arm-linux-gcc -c -o led_on.o led_on.S
+    arm-linux-ld -Ttext 0 led_on.o -o led_on.elf
+    arm-linux-objcopy -O binary -S led_on.elf led_on.bin
+    arm-linux-objdump -D led_on.elf &gt; led_on.dis
+clean:
+    rm *.bin *.o *.elf
+</code></pre><p>这是一个Makefile文件，他的规则和原理见Makefile小节。Linux下执行make后，得到led_on.o、led_on.elf、led_on.bin、led_on.dis，用openjtag，用oflash烧写led_on.bin文件到nand（nor也行），然后选择正确的启动方式，即可看到led亮了。</p>
+<h4 id="4-反汇编文件led-on-dis"><a href="#4-反汇编文件led-on-dis" class="headerlink" title="4. 反汇编文件led_on.dis"></a>4. 反汇编文件led_on.dis</h4><pre><code>led_on.elf:     file format elf32-littlearm
+
+Disassembly of section .text:
+
+00000000 &lt;_start&gt;:
+   0:    e59f1014     ldr    r1, [pc, #20]    ; 1c &lt;.text+0x1c&gt;
+   4:    e3a00c01     mov    r0, #256    ; 0x100
+   8:    e5810000     str    r0, [r1]
+   c:    e59f100c     ldr    r1, [pc, #12]    ; 20 &lt;.text+0x20&gt;
+  10:    e3a00000     mov    r0, #0    ; 0x0
+  14:    e5810000     str    r0, [r1]
+
+00000018 &lt;halt&gt;:
+  18:    eafffffe     b    18 &lt;halt&gt;
+  1c:    56000050     undefined
+  20:    56000054     undefined
+</code></pre><p>仔细研究一下这个.dis反汇编文件，左边第一列是地址、第二列e59f1014是机器码、右边的是汇编码。</p>
+<p>第一条ldr指令，把后面地址里面的内容放到r1寄存器中，后面是 [pc,#20]，是pc的值加上立即数20（这个是十进制的）是1c，pc是程序计数器，当把一个地址写入到pc时，lr寄存器保存返回地址（原来地址）。pc是当前指令地址+8，<br>ARM流水线工作：当前执行地址A的指令，已经对地址A+4的指令进行了译码，已经读取地址A+8的指令了。执行第一条指令时，地址是0，那么此时pc应该是8，加上立即数20等于28，转换为十六进制是0x1c，在本条语句后已经给出了。那就是说，把地址0x1c里面的数放到寄存器r1中，即r1里面是56000050</p>
+<p>第二条指令是mov，原汇编指令是用的ldr，这里0x100是可以用mov表示的立即数（在mov的范围内），直接把ldr拆分成mov即可，0x100转换成了256，这是一个立即数。</p>
+<p>剩下的几条指令也是这个原理。</p>
+<h4 id="4-二进制文件led-on-bin的介绍和修改"><a href="#4-二进制文件led-on-bin的介绍和修改" class="headerlink" title="4. 二进制文件led_on.bin的介绍和修改"></a>4. 二进制文件led_on.bin的介绍和修改</h4><p>用UE可以方便的查看.bin文件的内容，就是机器码，反汇编文件的第二列。现在有了.bin文件，可以对.bin文件直接进行修改是程序点亮其他led。以配寄存器为例，点亮其他led肯定不是0x100了，是别的数，那么修改本条mov指令的机器码即可，查mov指令的32位各个位的含义，那些位是表示mov指令，那些位是目的操作数，那些位是源操作数，立即数，进行修改即可，<font color="#0000ff" size="4">本小节以后补充</font></p>
+<p>二进制01，数据使用多个晶体管表示，晶体管只有通断两种状态，正好对应二进制的01，如果要表示一个字节的数据，就用8个晶体管就行了。</p>
+<h4 id="5-编程知识"><a href="#5-编程知识" class="headerlink" title="5. 编程知识"></a>5. 编程知识</h4><h5 id="1-进制"><a href="#1-进制" class="headerlink" title="1. 进制"></a>1. 进制</h5><h5 id="2-字节序"><a href="#2-字节序" class="headerlink" title="2. 字节序"></a>2. 字节序</h5><p>ARM芯片一般默认小字节序，但是可以配制成整个系统都用大字节序。</p>
+<h5 id="3-位操作"><a href="#3-位操作" class="headerlink" title="3. 位操作"></a>3. 位操作</h5><h6 id="左右移位"><a href="#左右移位" class="headerlink" title="左右移位"></a>左右移位</h6><pre><code>a = b&gt;&gt;2;  // b装换成二进制，然后所有位项右移动2位
+a = b&lt;&lt;3;  // b装换成二进制，然后所有位项左移动3位
+</code></pre><p>如果是 b 是11000的话，执行完第一条后 a 是110，执行完第二条 a 是110000</p>
+<h6 id="置位"><a href="#置位" class="headerlink" title="置位"></a>置位</h6><p>置位就是把某个数的某个位变为 1 ,只要将这个数和一个该位位 1，其他位为0的数与操作就行了，这个位就编程1，其他位不影响。</p>
+<pre><code>a = 5; // 5 的二进制是 101
+a = a | (1&lt;&lt;1);
+</code></pre><p>把数 5 的第2位置1</p>
+<h5 id="4-C语言指针的理解"><a href="#4-C语言指针的理解" class="headerlink" title="4. C语言指针的理解"></a>4. C语言指针的理解</h5><pre><code>int a = 10;
+int *p=&amp;a;
+</code></pre><p>指针也算是一个变量，但是他特殊在他的值是内存的地址，可以说指针指向某一块内存。房子有门牌号，房子里面有东西。这个房子就是内存，房子的门牌号就是地址，就是指针里面的值，这个房子可以定义为a单元。</p>
+<h4 id="C语言点亮led"><a href="#C语言点亮led" class="headerlink" title="C语言点亮led"></a>C语言点亮led</h4><h4 id="C源代码"><a href="#C源代码" class="headerlink" title="C源代码"></a>C源代码</h4><pre><code>int main()
+{
+    unsigned int *pGPFCON = (unsigned int *)0x56000050;
+    unsigned int *pGPFDAT = (unsigned int *)0x56000054;
+
+    *pGPFCON = 0x100;
+
+    *pGPFDAT = 0;
+
+    return 0;
+}
+</code></pre><p>解释：通过之前的汇编代码我们知道，想点亮led，首先要配置与他连接的io口的配置寄存器和数据寄存器，这两个寄存器又只是普通的内存，为了往这个寄存器中写入数据，就是往相应的地址写入数据，那么就要用指针操作了。</p>
+<p>首先要要定义一个指针变量，然后把配置寄存器的地址放到这个指针变量，就是让这个指针变量指向这个寄存器，然后给这个指针变量指向的地址写入数据就好了。</p>
+<p>第一句，在程序中 0x56000050 只是一个普通的16进制数，要先强制转换为一个地址，然后定义成指针。</p>
+<p>第三句，直接向这个指针指向的地址写入数据，进行配置io口。</p>
+<h4 id="汇编代码"><a href="#汇编代码" class="headerlink" title="汇编代码"></a>汇编代码</h4><p>上面写好的main函数谁来调用他呢？main函数中的变量保存在内存中，内存地址是多少呢？还需要汇编代码，给main函数设置内存，调用main函数</p>
+<pre><code>.text
+.global _start
+
+_start:
+
+    /* 设置内存: sp 栈 */
+    ldr sp, =4096  /* nand启动 */
+//    ldr sp, =0x40000000+4096  /* nor启动 */
+
+    /* 调用main */
+    bl main
+
+halt:
+    b halt
+</code></pre><p>局部变量保存在栈，栈对应一块内存，NAND启动时候，0地址是片内4K，把栈设置在4K内存的顶部；NOR启动，片内4K的地址是0x40000000</p>
+<h4 id="Makefile"><a href="#Makefile" class="headerlink" title="Makefile"></a>Makefile</h4><pre><code>all:
+    arm-linux-gcc -c -o led.o led.c
+    arm-linux-gcc -c -o start.o start.S
+    arm-linux-ld -Ttext 0 start.o led.o -o led.elf
+    arm-linux-objcopy -O binary -S led.elf led.bin
+    arm-linux-objdump -D led.elf &gt; led.dis
+clean:
+    rm *.bin *.o *.elf *.dis
+</code></pre><h4 id="反汇编文件"><a href="#反汇编文件" class="headerlink" title="反汇编文件"></a>反汇编文件</h4><pre><code>led.elf:     file format elf32-littlearm
+
+Disassembly of section .text:
+
+00000000 &lt;_start&gt;:
+   0:    e3a0da01     mov    sp, #4096    ; 0x1000
+   4:    eb000000     bl    c &lt;main&gt;
+
+00000008 &lt;halt&gt;:
+   8:    eafffffe     b    8 &lt;halt&gt;
+
+0000000c &lt;main&gt;:
+   c:    e1a0c00d     mov    ip, sp
+  10:    e92dd800     stmdb    sp!, {fp, ip, lr, pc}
+  14:    e24cb004     sub    fp, ip, #4    ; 0x4
+  18:    e24dd008     sub    sp, sp, #8    ; 0x8
+  1c:    e3a03456     mov    r3, #1442840576    ; 0x56000000
+  20:    e2833050     add    r3, r3, #80    ; 0x50
+  24:    e50b3010     str    r3, [fp, #-16]
+  28:    e3a03456     mov    r3, #1442840576    ; 0x56000000
+  2c:    e2833054     add    r3, r3, #84    ; 0x54
+  30:    e50b3014     str    r3, [fp, #-20]
+  34:    e51b2010     ldr    r2, [fp, #-16]
+  38:    e3a03c01     mov    r3, #256    ; 0x100
+  3c:    e5823000     str    r3, [r2]
+  40:    e51b2014     ldr    r2, [fp, #-20]
+  44:    e3a03000     mov    r3, #0    ; 0x0
+  48:    e5823000     str    r3, [r2]
+  4c:    e3a03000     mov    r3, #0    ; 0x0
+  50:    e1a00003     mov    r0, r3
+  54:    e24bd00c     sub    sp, fp, #12    ; 0xc
+  58:    e89da800     ldmia    sp, {fp, sp, pc}
+Disassembly of section .comment:
+
+00000000 &lt;.comment&gt;:
+   0:    43434700     cmpmi    r3, #0    ; 0x0
+   4:    4728203a     undefined
+   8:    2029554e     eorcs    r5, r9, lr, asr #10
+   c:    2e342e33     mrccs    14, 1, r2, cr4, cr3, {1}
+  10:    Address 0x10 is out of bounds.
+</code></pre><p>这个反汇编文件有几条需要说明</p>
+<p>第一条：stmdb    sp!, {fp, ip, lr, pc}，stmdb：先减后存。sp先自己做减法，再存储，fp、ip、lr、pc都存起来，存的顺序不是他们先后的排序，而是高编号的寄存器存放在高地址，fp是r11、ip是r12、lr是r14、pc是r15，也就说存储后的结果，从高地址到低地址依次是：pc、lr、ip、fp，然后sp是多少呢？看这条命令中的sp后面有没有“！”，如果有那么sp的值就是减了又减的最终值，如果没有“！”，那么sp的值不变，还是原来的值。</p>
+<p>初始值sp=4096</p>
+<p>先减4等于4092，存储pc，即pc这个32位的寄存器存储在4092、4093、4094、4095四个内存单元中（一个内存单元是1个字节，8bit）</p>
+<p>sp继续减4，等于4088，再存储lr，在地址为4088~4091的四个内存单元中</p>
+<p>sp继续减4，等于4084，再存储ip，在地址为4084~4087的四个内存单元中 </p>
+<p>sp继续减4，等于4080，再存储fp，在地址为4080~4083的四个内存单元中</p>
+<p>此时，sp是4080 </p>
+<p>ldmia    sp, {fp, sp, pc}，先读取后增加，从内存中读取数据存放在寄存器中，高编号寄存器存放高地址内存的值，此时sp等于4080。</p>
+<p>读取内存地址4080~4083的内容存在fp中，就是回复原来的fp，sp等于4084</p>
+<p>读取内存地址4084~4087的内容存在sp中，就是把原来ip的内容读到现在的sp中，sp等于4096</p>
+<p>读取内存地址4088~4091的内容存在fp中，就是把原来lr的内容读到现在的pc中，sp等于4092</p>
+<p>最终sp不是4092因为，没有“！”，应该是原来的ip。此时pc的内容是lr，就是执行bl指令回来后要执行的地址。</p>
+<h4 id="小结一下"><a href="#小结一下" class="headerlink" title="小结一下"></a>小结一下</h4><h5 id="1-汇编文件"><a href="#1-汇编文件" class="headerlink" title="1. 汇编文件"></a>1. 汇编文件</h5><p>设置栈；调用main函数，并且把返回地址保存到lr寄存器中</p>
+<h5 id="2-C文件"><a href="#2-C文件" class="headerlink" title="2. C文件"></a>2. C文件</h5><p>定义两个局部变量；设置变量，返回0</p>
+<h5 id="3-问题1：为什么设置栈？"><a href="#3-问题1：为什么设置栈？" class="headerlink" title="3. 问题1：为什么设置栈？"></a>3. 问题1：为什么设置栈？</h5><p>因为C函数的局部变量保存在栈中</p>
+<h5 id="4-问题2：这个栈怎么用？"><a href="#4-问题2：这个栈怎么用？" class="headerlink" title="4. 问题2：这个栈怎么用？"></a>4. 问题2：这个栈怎么用？</h5><p>保存局部变量；保存lr等寄存器</p>
+<h5 id="5-问题3：调用者如何给被调用的函数传递参数"><a href="#5-问题3：调用者如何给被调用的函数传递参数" class="headerlink" title="5. 问题3：调用者如何给被调用的函数传递参数"></a>5. 问题3：调用者如何给被调用的函数传递参数</h5><p>用r0~r3四个寄存器，比如在汇编文件中：</p>
+<pre><code>mov r0,#100
+bl delays
+</code></pre><p>在C文件中</p>
+<pre><code>void delay(ing time)
+{
+...
+}
+</code></pre><p>这样这个r0寄存器的100作为参数就传到了C文件的delays中了</p>
+<p>在被调用的程序中，r4~r11可能被使用，那么调用函数之前要保存r4~r11寄存器的内容，在调用函数之后，在恢复他们。</p>
+<h5 id="6-重新理解-bin文件-NAND启动"><a href="#6-重新理解-bin文件-NAND启动" class="headerlink" title="6. 重新理解.bin文件,NAND启动"></a>6. 重新理解.bin文件,NAND启动</h5><p>之前说过.bin文件内容是机器码，这些代码和局部变量等等怎么存放在内存中呢？</p>
+<p>以nand启动为例，.bin文件（没有4K大）全部复制到片内的RAM中，怎么排放呢？.bin的机器码的第一条（4字节，32位的）存放在这4K的第0~3个共4个内存单元中</p>
+<p>第二条机器码存放在第4~7个共4个内存单元中</p>
+<p>…以此类推</p>
+<p>那局部变量呢？局部变量保存在栈中，栈就是sp指向的内容，通过上面的分析，能知道sp一开始是4096指向了这快内存的最高地址，然后依次减小，保存各个寄存器，和局部变量，有了以上的基础，就可以分析清楚反汇编文件的流程，可以得到，片内的4k内存，地址保存的是程序的机器码，这个不是我们控制的，高地址保存的是各个寄存器、局部变量，这个位置是我们可以选择的，.bin的机器码和栈是用不完这4K的，是安全的。如果4K不够，这个程序肯定跑不起来，有问题，因为没有足够的空间让他运行。</p>
+<h4 id="附上一个判断启动方式的程序"><a href="#附上一个判断启动方式的程序" class="headerlink" title="附上一个判断启动方式的程序"></a>附上一个判断启动方式的程序</h4><pre><code>.text
+.global _start
+
+_start:
+
+    /* 关闭看门狗 */
+    ldr r0, =0x53000000
+    ldr r1, =0
+    str r1, [r0]
+
+    /* 设置内存: sp 栈 */
+    /* 分辨是nor/nand启动
+     * 写0到0地址, 再读出来
+     * 如果得到0, 表示0地址上的内容被修改了, 它对应ram, 这就是nand启动
+     * 否则就是nor启动
+     */
+    mov r1, #0
+    ldr r0, [r1] /* 读出原来的值备份 */
+    str r1, [r1] /* 0-&gt;[0] */ 
+    ldr r2, [r1] /* r2=[0] */
+    cmp r1, r2   /* r1==r2? 如果相等表示是NAND启动 */
+    ldr sp, =0x40000000+4096 /* 先假设是nor启动 */
+    moveq sp, #4096  /* nand启动 */
+    streq r0, [r1]   /* 恢复原来的值 */
+
+
+    bl main
+
+halt:
+    b halt
+</code></pre><h3 id="Makefile规则"><a href="#Makefile规则" class="headerlink" title="Makefile规则"></a>Makefile规则</h3>
       
 
       
