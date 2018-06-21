@@ -8,18 +8,18 @@
   <link rel="dns-prefetch" href="http://yoursite.com">
   <title>u-boot | alone的小站</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="windows和linux系统的启动流程  windows和linux系统的启动流程 windows系统的硬件设备：上电后，运行BIOS，它引导win操作系统，然后识别出C、D等盘，在运行应用，QQ、LOL等等。  linux系统的硬件设备：上电后，运行bootloader，引导linux内核，然后挂载根文件系统，继而运行各种程序。 bootloader最终目的启动内核，而u-boot是一种bo">
+  <meta name="description" content="windows和linux系统的启动流程  打补丁   windows和linux系统的启动流程windows系统的硬件设备：上电后，运行BIOS，它引导win操作系统，然后识别出C、D等盘，在运行应用，QQ、LOL等等。 linux系统的硬件设备：上电后，运行bootloader，引导linux内核，然后挂载根文件系统，继而运行各种程序。 bootloader最终目的启动内核，而u-boot是">
 <meta name="keywords" content="linux,控制算法">
 <meta property="og:type" content="article">
 <meta property="og:title" content="u-boot">
 <meta property="og:url" content="http://yoursite.com/2018/06/21/u-boot/index.html">
 <meta property="og:site_name" content="alone的小站">
-<meta property="og:description" content="windows和linux系统的启动流程  windows和linux系统的启动流程 windows系统的硬件设备：上电后，运行BIOS，它引导win操作系统，然后识别出C、D等盘，在运行应用，QQ、LOL等等。  linux系统的硬件设备：上电后，运行bootloader，引导linux内核，然后挂载根文件系统，继而运行各种程序。 bootloader最终目的启动内核，而u-boot是一种bo">
+<meta property="og:description" content="windows和linux系统的启动流程  打补丁   windows和linux系统的启动流程windows系统的硬件设备：上电后，运行BIOS，它引导win操作系统，然后识别出C、D等盘，在运行应用，QQ、LOL等等。 linux系统的硬件设备：上电后，运行bootloader，引导linux内核，然后挂载根文件系统，继而运行各种程序。 bootloader最终目的启动内核，而u-boot是">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2018-06-21T08:56:04.043Z">
+<meta property="og:updated_time" content="2018-06-21T09:07:23.177Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="u-boot">
-<meta name="twitter:description" content="windows和linux系统的启动流程  windows和linux系统的启动流程 windows系统的硬件设备：上电后，运行BIOS，它引导win操作系统，然后识别出C、D等盘，在运行应用，QQ、LOL等等。  linux系统的硬件设备：上电后，运行bootloader，引导linux内核，然后挂载根文件系统，继而运行各种程序。 bootloader最终目的启动内核，而u-boot是一种bo">
+<meta name="twitter:description" content="windows和linux系统的启动流程  打补丁   windows和linux系统的启动流程windows系统的硬件设备：上电后，运行BIOS，它引导win操作系统，然后识别出C、D等盘，在运行应用，QQ、LOL等等。 linux系统的硬件设备：上电后，运行bootloader，引导linux内核，然后挂载根文件系统，继而运行各种程序。 bootloader最终目的启动内核，而u-boot是">
   
     <link rel="alternative" href="/atom.xml" title="alone的小站" type="application/atom+xml">
   
@@ -164,13 +164,16 @@
     <div class="article-entry" itemprop="articleBody">
       
         <ul>
-<li>windows和linux系统的启动流程</li>
+<li><p>windows和linux系统的启动流程</p>
+</li>
+<li><p>打补丁</p>
+</li>
 </ul>
-<h4 id="windows和linux系统的启动流程"><a href="#windows和linux系统的启动流程" class="headerlink" title="windows和linux系统的启动流程"></a>windows和linux系统的启动流程</h4><ol>
-<li>windows系统的硬件设备：上电后，运行BIOS，它引导win操作系统，然后识别出C、D等盘，在运行应用，QQ、LOL等等。</li>
-</ol>
+<h4 id="windows和linux系统的启动流程"><a href="#windows和linux系统的启动流程" class="headerlink" title="windows和linux系统的启动流程"></a>windows和linux系统的启动流程</h4><p>windows系统的硬件设备：上电后，运行BIOS，它引导win操作系统，然后识别出C、D等盘，在运行应用，QQ、LOL等等。</p>
 <p>linux系统的硬件设备：上电后，运行bootloader，引导linux内核，然后挂载根文件系统，继而运行各种程序。</p>
 <p>bootloader最终目的启动内核，而u-boot是一种bootloader。</p>
+<h4 id="打补丁"><a href="#打补丁" class="headerlink" title="打补丁"></a>打补丁</h4><h5 id="什么是补丁"><a href="#什么是补丁" class="headerlink" title="什么是补丁"></a>什么是补丁</h5><p>补丁文件相当于对原文件的修改的记录，打补丁是把这些需要修改的地方修改一下，把原文件修改过的新的文件，便于利用。一般是，发布原文件，大家下载，然后发布者觉得需要修改，生成补丁文件，大家拿到补丁文件，打上这个补丁，就和发布者修改后的一样的。</p>
+<h5 id="怎么打补丁"><a href="#怎么打补丁" class="headerlink" title="怎么打补丁"></a>怎么打补丁</h5><p>大补丁之前，一定要确定，这个补丁和这个文件的版本配套的。也就是说这个补丁是要修改这个版本的文件。</p>
 
       
 
